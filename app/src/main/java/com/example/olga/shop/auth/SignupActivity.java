@@ -1,4 +1,4 @@
-package com.example.olga.shop;
+package com.example.olga.shop.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.olga.shop.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
