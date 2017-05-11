@@ -17,14 +17,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.olga.shop.adapters.ProductAdapter;
 import com.example.olga.shop.auth.LoginActivity;
+import com.example.olga.shop.constant.Constant;
+import com.example.olga.shop.models.Product;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,6 +79,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
+
+        ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
+        //lvProducts.addHeaderView(getLayoutInflater().inflate(R.layout.product_list_header, lvProducts, false));
+
+        ProductAdapter productAdapter = new ProductAdapter(this);
+        productAdapter.updateProducts(Constant.PRODUCT_LIST);
+
+        lvProducts.setAdapter(productAdapter);
+
+        lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Product product = Constant.PRODUCT_LIST.get(position);
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", product);
+                Log.d("MainActivity", "View product: " + product.getName());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
