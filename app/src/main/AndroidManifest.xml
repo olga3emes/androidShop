@@ -28,7 +28,12 @@
             android:name=".auth.SignupActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity android:name=".ProductActivity" />
-        <activity android:name=".ShoppingCartActivity"></activity>
+
+        <activity
+            android:name=".ShoppingCartActivity"
+            android:label="Cart">
+
+        </activity>
     </application>
 
 </manifest>
