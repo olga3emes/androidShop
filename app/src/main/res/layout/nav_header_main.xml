@@ -19,8 +19,8 @@
 
         <tools.RoundedImageView
             android:id="@+id/profileImage"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:background="@drawable/ic_photo_profile"
             android:onClick="loadImagefromGallery"
             android:paddingTop="@dimen/nav_header_vertical_spacing" />
