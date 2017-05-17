@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olga.shop.adapters.CartItemAdapter;
 import com.example.olga.shop.constant.Constant;
@@ -75,6 +76,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ShoppingCartActivity.this, MainActivity.class);
                 startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Go to payment platform", Toast.LENGTH_LONG).show();
+
             }
         });
 

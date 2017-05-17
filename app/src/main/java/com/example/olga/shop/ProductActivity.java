@@ -1,11 +1,15 @@
 package com.example.olga.shop;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -16,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.olga.shop.constant.Constant;
 import com.example.olga.shop.models.Cart;
@@ -78,8 +83,43 @@ public class ProductActivity extends AppCompatActivity {
                 Cart cart = CartHelper.getCart();
                 Log.d(TAG, "Adding product: " + product.getName());
                 cart.add(product, Integer.valueOf(spQuantity.getSelectedItem().toString()));
+
                 Intent intent = new Intent(ProductActivity.this, ShoppingCartActivity.class);
-                startActivity(intent);
+
+                //Create an instance of notification constructor
+                // Title and content we can concat the set methods
+                NotificationCompat.Builder notif = new NotificationCompat.Builder(getApplicationContext());
+                notif.setContentText("New product added to shopping cart.")
+                        .setContentTitle("Added: "+ product.getName())
+                        .setSmallIcon(R.drawable.logo_72);
+
+                // Action (optional)
+                PendingIntent pendingIntent = PendingIntent.getActivity(ProductActivity.this, 0, intent, 0);
+                notif.setContentIntent(pendingIntent);
+
+                //ActionButtons (optional)
+                notif.addAction(new NotificationCompat.Action.Builder(R.drawable.ic_shopping_cart_24dp, "See on shopping cart", pendingIntent).build());
+
+                //Send notification to system
+                NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                nm.notify(1, notif.build());
+
+
+                Integer quantity= Integer.valueOf(spQuantity.getSelectedItem().toString());
+                String items="";
+                if(quantity==1){
+                   items= " Item added to cart";
+                }else{
+                    items=" Items added to cart";
+                }
+
+                Toast.makeText(getApplicationContext(), spQuantity.getSelectedItem().toString() + items, Toast.LENGTH_LONG).show();
+
+
+               // nm.cancel(1);     //Cancel the notification with id 1
+
+
+
             }
         });
     }
