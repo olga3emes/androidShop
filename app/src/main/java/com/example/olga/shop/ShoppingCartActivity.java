@@ -1,6 +1,7 @@
 package com.example.olga.shop;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -46,6 +47,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
         lvCartItems = (ListView) findViewById(R.id.lvCartItems);
         LayoutInflater layoutInflater = getLayoutInflater();
 
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.cancel(1);
+
         final Cart cart = CartHelper.getCart();
         final TextView tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
         tvTotalPrice.setText(Constant.CURRENCY+String.valueOf(cart.getTotalPrice().setScale(2, BigDecimal.ROUND_HALF_UP)));
@@ -81,7 +85,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             }
         });
 
-        lvCartItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+       lvCartItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 new AlertDialog.Builder(ShoppingCartActivity.this)
@@ -91,8 +95,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 List<CartItem> cartItems = getCartItems(cart);
-                                cart.remove(cartItems.get(position-1).getProduct());
-                                cartItems.remove(position-1);
+                                cart.remove(cartItems.get(position).getProduct());
+                                cartItems.remove(position);
                                 cartItemAdapter.updateCartItems(cartItems);
                                 cartItemAdapter.notifyDataSetChanged();
                                 tvTotalPrice.setText(Constant.CURRENCY+String.valueOf(cart.getTotalPrice().setScale(2, BigDecimal.ROUND_HALF_UP)));
@@ -109,7 +113,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 List<CartItem> cartItems = getCartItems(cart);
-                Product product = cartItems.get(position-1).getProduct();
+                Product product = cartItems.get(position).getProduct();
                 Log.d(TAG, "Viewing product: " + product.getName());
                 bundle.putSerializable("product", product);
                 Intent intent = new Intent(ShoppingCartActivity.this, ProductActivity.class);

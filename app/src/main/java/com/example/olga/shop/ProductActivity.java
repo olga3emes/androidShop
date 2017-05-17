@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,6 +46,21 @@ public class ProductActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_product);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TextView tvViewShoppingCart = (TextView)findViewById(R.id.shopping_cart);
+        SpannableString content = new SpannableString("Shopping Cart");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvViewShoppingCart.setText(content);
+        tvViewShoppingCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductActivity.this, ShoppingCartActivity.class);
+                startActivity(intent);
+            }
+        });
+
         Bundle data = getIntent().getExtras();
         product = (Product) data.getSerializable("product");
 
@@ -55,6 +71,16 @@ public class ProductActivity extends AppCompatActivity {
         initializeQuantity();
         onOrderProduct();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+
 
     private void retrieveViews() {
         tvProductName = (TextView) findViewById(R.id.tvProductName);
@@ -104,7 +130,6 @@ public class ProductActivity extends AppCompatActivity {
                 NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                 nm.notify(1, notif.build());
 
-
                 Integer quantity= Integer.valueOf(spQuantity.getSelectedItem().toString());
                 String items="";
                 if(quantity==1){
@@ -114,7 +139,6 @@ public class ProductActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(getApplicationContext(), spQuantity.getSelectedItem().toString() + items, Toast.LENGTH_LONG).show();
-
 
                // nm.cancel(1);     //Cancel the notification with id 1
 

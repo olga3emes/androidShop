@@ -27,13 +27,16 @@
         <activity
             android:name=".auth.SignupActivity"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".ProductActivity" />
-
+        <activity
+            android:name=".ProductActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ShoppingCartActivity"
-            android:label="Cart">
-
-        </activity>
+            android:label="Cart"></activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

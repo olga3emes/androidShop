@@ -2,6 +2,7 @@ package com.example.olga.shop.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,11 +14,12 @@ import android.widget.Toast;
 
 
 import com.example.olga.shop.R;
+import com.example.olga.shop.sqlite.AuthSQLite;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity{
     private static final String TAG = "SignupActivity";
 
     @Bind(R.id.input_name) EditText _nameText;
@@ -77,7 +79,9 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        // TODO: Implement your own signup logic here.
+
+        AuthSQLite auth;
+
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
