@@ -32,11 +32,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ShoppingCartActivity"
-            android:label="Cart"></activity>
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
+            android:label="Cart"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-    </application>
-
+</application>
 </manifest>

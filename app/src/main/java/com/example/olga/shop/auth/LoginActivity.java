@@ -2,6 +2,7 @@ package com.example.olga.shop.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olga.shop.R;
+import com.example.olga.shop.models.User;
+import com.example.olga.shop.sqlite.AuthSQLite;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +22,7 @@ import butterknife.ButterKnife;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private AuthSQLite auth = new AuthSQLite(this);
 
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
@@ -132,6 +136,18 @@ public class LoginActivity extends AppCompatActivity {
             valid = false;
         } else {
             _passwordText.setError(null);
+        }
+
+
+
+        if(!auth.checkUser(email)){
+            _emailText.setError("Not found email address");
+            valid = false;
+        }else{
+            if(!auth.checkUser(email,password)){
+                _passwordText.setError("Invalid password");
+                valid = false;
+            }
         }
 
         return valid;

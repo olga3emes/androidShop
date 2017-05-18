@@ -2,6 +2,7 @@ package com.example.olga.shop.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 
 import com.example.olga.shop.R;
+import com.example.olga.shop.models.User;
 import com.example.olga.shop.sqlite.AuthSQLite;
 
 import butterknife.Bind;
@@ -21,6 +23,7 @@ import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity{
     private static final String TAG = "SignupActivity";
+    private  AuthSQLite auth = new AuthSQLite(this);
 
     @Bind(R.id.input_name) EditText _nameText;
     @Bind(R.id.input_address) EditText _addressText;
@@ -55,8 +58,13 @@ public class SignupActivity extends AppCompatActivity{
             }
         });
     }
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
 
     public void signup() {
+
         Log.d(TAG, "Signup");
 
         if (!validate()) {
@@ -80,7 +88,14 @@ public class SignupActivity extends AppCompatActivity{
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
 
-        AuthSQLite auth;
+
+        User u = new User();
+        u.setName(name);
+        u.setAddress(address);
+        u.setEmail(email);
+        u.setPhone(Integer.valueOf(mobile));
+        u.setPassword(password);
+        auth.addUser(u);
 
 
         new android.os.Handler().postDelayed(

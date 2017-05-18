@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -45,16 +47,20 @@ public class ShoppingCartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         lvCartItems = (ListView) findViewById(R.id.lvCartItems);
-        LayoutInflater layoutInflater = getLayoutInflater();
 
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         nm.cancel(1);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         final Cart cart = CartHelper.getCart();
+
+        final Button badge = (Button) findViewById(R.id.badge_textView);
+        badge.setText(String.valueOf(cart.getTotalQuantity()));
+
         final TextView tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
         tvTotalPrice.setText(Constant.CURRENCY+String.valueOf(cart.getTotalPrice().setScale(2, BigDecimal.ROUND_HALF_UP)));
-
-        //lvCartItems.addHeaderView(layoutInflater.inflate(R.layout.cart_header, lvCartItems, false));
 
         final CartItemAdapter cartItemAdapter = new CartItemAdapter(this);
         cartItemAdapter.updateCartItems(getCartItems(cart));
@@ -82,6 +88,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "Go to payment platform", Toast.LENGTH_LONG).show();
 
+            }
+        });
+
+        Button arrowBack = (Button) findViewById(R.id.arrow_left);
+        arrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -122,6 +136,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+
+
 
     private List<CartItem> getCartItems(Cart cart) {
         List<CartItem> cartItems = new ArrayList<CartItem>();

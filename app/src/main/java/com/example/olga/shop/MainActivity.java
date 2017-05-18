@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,7 +31,10 @@ import android.widget.Toast;
 import com.example.olga.shop.adapters.ProductAdapter;
 import com.example.olga.shop.auth.LoginActivity;
 import com.example.olga.shop.constant.Constant;
+import com.example.olga.shop.models.Cart;
 import com.example.olga.shop.models.Product;
+
+import tools.CartHelper;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,6 +106,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
+        final Cart cart = CartHelper.getCart();
+
+        final Button badge = (Button) findViewById(R.id.badge_textView);
+        badge.setText(String.valueOf(cart.getTotalQuantity()));
+
 
     }
 

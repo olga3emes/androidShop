@@ -6,49 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.olga.shop.ProductActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:weightSum="1">
-
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:gravity="right">
-
-                <Button
-                    android:id="@+id/shopping_cart"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/ic_shopping_cart_24dp" />
-
-                <Button
-                    android:id="@+id/badge_textView"
-                    android:layout_width="24dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="-4dp"
-                    android:layout_height="24dp"
-                    android:gravity="center"
-                    android:background="@drawable/ic_badge_circle24dp"
-                    android:text="10"
-                    android:textColor="@color/white"
-                    android:textSize="8sp" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
-
+    <include layout="@layout/app_header_custom"></include>
     <include layout="@layout/content_product" />
 
 

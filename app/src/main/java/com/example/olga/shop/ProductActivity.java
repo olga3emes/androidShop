@@ -61,6 +61,19 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
+        final Cart cart = CartHelper.getCart();
+
+        final Button badge = (Button) findViewById(R.id.badge_textView);
+        badge.setText(String.valueOf(cart.getTotalQuantity()));
+
+        Button arrowBack = (Button) findViewById(R.id.arrow_left);
+        arrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         Bundle data = getIntent().getExtras();
         product = (Product) data.getSerializable("product");
 
