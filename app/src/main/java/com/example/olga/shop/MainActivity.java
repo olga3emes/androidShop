@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-    private static int RESULT_LOAD_IMG = 1;
+    private static int RESULT_LOAD_IMG = 2;
 
     public void loadImagefromGallery(View view) {
         // Create intent to Open Image applications like Gallery, Google Photos
@@ -210,11 +210,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("video", data.getData());
                 startActivity(intent);
             }else{
-                Toast.makeText(this, "Any Video picked",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Any Video picked", Toast.LENGTH_LONG).show();
             }
         }
-
         if(requestCode== RESULT_LOAD_IMG) {
 
             super.onActivityResult(requestCode, resultCode, data);
