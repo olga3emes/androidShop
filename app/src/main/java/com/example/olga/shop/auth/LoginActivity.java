@@ -1,7 +1,9 @@
 package com.example.olga.shop.auth;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,10 +56,18 @@ public class LoginActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
+
+        SharedPreferences sharedPreferences  = getSharedPreferences("saveEmail", Activity.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email","");
+
+        _emailText.setText(email);
+
     }
+
 
     public void login() {
         Log.d(TAG, "Login");
+
 
         if (!validate()) {
             onLoginFailed();
@@ -75,14 +85,18 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        SharedPreferences sharedPreferences  = getSharedPreferences("saveEmail", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email",email);
+        editor.commit();
+        Toast.makeText(this, "mail"+ email,Toast.LENGTH_SHORT).show();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
                         onLoginSuccess();
-                        // onLoginFailed();
+
                         progressDialog.dismiss();
                     }
                 }, 3000);
