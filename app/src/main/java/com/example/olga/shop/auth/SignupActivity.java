@@ -152,7 +152,13 @@ public class SignupActivity extends AppCompatActivity{
             _emailText.setError("Enter a valid email address");
             valid = false;
         } else {
+            if(auth.checkUser(email)) {
+                _emailText.setError("This email is already used");
+                valid = false;
+            }else {
             _emailText.setError(null);
+            }
+
         }
 
         if (mobile.isEmpty() || mobile.length()!=9) {

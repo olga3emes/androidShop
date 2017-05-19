@@ -1,7 +1,9 @@
 package com.example.olga.shop;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -224,9 +227,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Get the Image from data
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    isStoragePermissionGranted();
+                        Cursor cursor =
+                                getContentResolver()
+                                        .query(selectedImage, filePathColumn, null, null, null);
                     // Get the cursor
-                    Cursor cursor = getContentResolver().query(selectedImage,
-                            filePathColumn, null, null, null);
+
+
                     // Move to first row
                     cursor.moveToFirst();
 
@@ -264,6 +271,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
                 height, filter);
         return newBitmap;
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.i("P","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("PR","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("PG","Permission is granted");
+            return true;
+        }
     }
 
 }

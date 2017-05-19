@@ -41,7 +41,7 @@
                     android:layout_height="24dp"
                     android:gravity="center"
                     android:background="@drawable/ic_badge_circle24dp"
-                    android:text="10"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
             </RelativeLayout>
