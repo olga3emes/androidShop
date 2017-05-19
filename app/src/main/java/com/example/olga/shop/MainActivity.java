@@ -1,10 +1,12 @@
 package com.example.olga.shop;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -147,6 +149,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+
+
+    private static final int REQUEST_VIDEO = 1;
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -158,6 +164,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            else
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("video/*");
+            startActivityForResult(intent, REQUEST_VIDEO);
 
         } else if (id == R.id.nav_manage) {
 
@@ -172,6 +186,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
+
+
+
+
     private static int RESULT_LOAD_IMG = 1;
 
     public void loadImagefromGallery(View view) {
@@ -185,41 +204,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        String imgDecodableString;
-        try {
-            // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
-                    && null != data) {
-                // Get the Image from data
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                // Get the cursor
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                // Move to first row
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imgDecodableString = cursor.getString(columnIndex);
-                cursor.close();
-                ImageView imgView = (ImageView) findViewById(R.id.profileImage);
-                // Set the Image in ImageView after decoding the String and remove drawable of background
-                Bitmap image= BitmapFactory
-                        .decodeFile(imgDecodableString);
-
-                imgView.setBackgroundResource(0);
-                Bitmap scaledImage = scaleDown(image, 240, true);
-
-                imgView.setImageBitmap(scaledImage);
-
-            } else {
-                Toast.makeText(this, "Any Image picked",
+        if(requestCode == REQUEST_VIDEO){
+            if (requestCode == REQUEST_VIDEO && resultCode == Activity.RESULT_OK) {
+                Intent intent = new Intent(this, VideoActivity.class);
+                intent.putExtra("video", data.getData());
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Any Video picked",
                         Toast.LENGTH_LONG).show();
             }
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
+        }
+
+        if(requestCode== RESULT_LOAD_IMG) {
+
+            super.onActivityResult(requestCode, resultCode, data);
+            String imgDecodableString;
+            try {
+                // When an Image is picked
+                if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                        && null != data) {
+                    // Get the Image from data
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    // Get the cursor
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    // Move to first row
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    imgDecodableString = cursor.getString(columnIndex);
+                    cursor.close();
+                    ImageView imgView = (ImageView) findViewById(R.id.profileImage);
+                    // Set the Image in ImageView after decoding the String and remove drawable of background
+                    Bitmap image = BitmapFactory
+                            .decodeFile(imgDecodableString);
+
+                    imgView.setBackgroundResource(0);
+                    Bitmap scaledImage = scaleDown(image, 240, true);
+
+                    imgView.setImageBitmap(scaledImage);
+
+                } else {
+                    Toast.makeText(this, "Any Image picked",
+                            Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
         }
     }
 
