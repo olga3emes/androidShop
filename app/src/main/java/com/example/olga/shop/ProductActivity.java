@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.olga.shop.constant.Constant;
 import com.example.olga.shop.models.Cart;
 import com.example.olga.shop.models.Product;
+import com.example.olga.shop.rss.RssActivity;
 
 import tools.CartHelper;
 
@@ -50,9 +51,6 @@ public class ProductActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView tvViewShoppingCart = (TextView)findViewById(R.id.shopping_cart);
-        SpannableString content = new SpannableString("Shopping Cart");
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        tvViewShoppingCart.setText(content);
         tvViewShoppingCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +58,6 @@ public class ProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         final Cart cart = CartHelper.getCart();
 
         final Button badge = (Button) findViewById(R.id.badge_textView);

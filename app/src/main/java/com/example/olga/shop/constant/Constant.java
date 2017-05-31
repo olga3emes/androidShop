@@ -20,12 +20,17 @@ public final class Constant {
     public static final Product PRODUCT3 = new Product(3, "Peineta Borlas \n Color: Rojo", BigDecimal.valueOf(24.99),
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", "peineta");
 
+    public static final Product PRODUCT4 = new Product(4, "Rosa abierta Tamaño: M \n Color: Rojo", BigDecimal.valueOf(7.59),
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", "rosa");
+
+
     public static final List<Product> PRODUCT_LIST = new ArrayList<Product>();
 
     static {
         PRODUCT_LIST.add(PRODUCT1);
         PRODUCT_LIST.add(PRODUCT2);
         PRODUCT_LIST.add(PRODUCT3);
+        PRODUCT_LIST.add(PRODUCT4);
     }
 
     public static final String CURRENCY = "€ ";

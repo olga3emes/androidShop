@@ -38,6 +38,7 @@ import com.example.olga.shop.auth.LoginActivity;
 import com.example.olga.shop.constant.Constant;
 import com.example.olga.shop.models.Cart;
 import com.example.olga.shop.models.Product;
+import com.example.olga.shop.rss.RssActivity;
 
 import tools.CartHelper;
 
@@ -57,19 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView tvViewShoppingCart = (TextView)findViewById(R.id.shopping_cart);
-        SpannableString content = new SpannableString("Shopping Cart");
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        tvViewShoppingCart.setText(content);
         tvViewShoppingCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +168,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_rss) {
+
+            Intent intent = new Intent(MainActivity.this, RssActivity.class);
+            startActivity(intent);
+
 
         }
 
@@ -231,12 +220,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
                     isStoragePermissionGranted();
+                    // Get the cursor
                         Cursor cursor =
                                 getContentResolver()
                                         .query(selectedImage, filePathColumn, null, null, null);
-                    // Get the cursor
-
-
                     // Move to first row
                     cursor.moveToFirst();
 

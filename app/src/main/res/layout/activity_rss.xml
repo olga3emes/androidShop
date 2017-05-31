@@ -5,15 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.olga.shop.ShoppingCartActivity"
+    tools:context="com.example.olga.shop.rss.RssActivity"
     android:background="@color/white">
 
     <include layout="@layout/app_header_custom"></include>
 
-    <include layout="@layout/content_cart" />
+    <include layout="@layout/content_rss" />
 
 
 </android.support.design.widget.CoordinatorLayout>
-
-
-
