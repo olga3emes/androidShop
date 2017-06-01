@@ -37,6 +37,7 @@ public class ProductActivity extends AppCompatActivity {
     TextView tvProductName;
     TextView tvProductDesc;
     ImageView ivProductImage;
+    TextView tvProductPrice;
     Spinner spQuantity;
     Button bOrder;
     Product product;
@@ -95,6 +96,7 @@ public class ProductActivity extends AppCompatActivity {
     private void retrieveViews() {
         tvProductName = (TextView) findViewById(R.id.tvProductName);
         tvProductDesc = (TextView) findViewById(R.id.tvProductDesc);
+        tvProductPrice = (TextView) findViewById(R.id.tvProductPrice);
         ivProductImage = (ImageView) findViewById(R.id.ivProductImage);
         spQuantity = (Spinner) findViewById(R.id.spQuantity);
         bOrder = (Button) findViewById(R.id.bOrder);
@@ -104,6 +106,7 @@ public class ProductActivity extends AppCompatActivity {
         tvProductName.setText(product.getName());
         tvProductDesc.setText(product.getDescription());
         ivProductImage.setImageResource(this.getResources().getIdentifier(product.getImageName(), "drawable", this.getPackageName()));
+        tvProductPrice.setText("€ "+product.getPrice().toString());
     }
 
     private void initializeQuantity() {

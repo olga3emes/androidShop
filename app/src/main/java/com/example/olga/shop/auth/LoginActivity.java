@@ -30,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
     @Bind(R.id.link_signup) TextView _signupLink;
-    
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
 
         _emailText.setText(email);
 
+
+
     }
 
 
@@ -89,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email",email);
         editor.commit();
-        Toast.makeText(this, "mail"+ email,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "mail"+ email,Toast.LENGTH_SHORT).show();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {

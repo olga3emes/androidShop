@@ -3,6 +3,7 @@ package com.example.olga.shop;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -39,12 +40,16 @@ import com.example.olga.shop.constant.Constant;
 import com.example.olga.shop.models.Cart;
 import com.example.olga.shop.models.Product;
 import com.example.olga.shop.rss.RssActivity;
+import com.example.olga.shop.sqlite.AuthSQLite;
 
+import butterknife.Bind;
 import tools.CartHelper;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private AuthSQLite auth = new AuthSQLite(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,9 +179,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
 
 
+        }else if (id == R.id.nav_contact) {
+
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
