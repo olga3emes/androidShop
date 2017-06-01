@@ -106,7 +106,7 @@ public class ProductActivity extends AppCompatActivity {
         tvProductName.setText(product.getName());
         tvProductDesc.setText(product.getDescription());
         ivProductImage.setImageResource(this.getResources().getIdentifier(product.getImageName(), "drawable", this.getPackageName()));
-        tvProductPrice.setText("€ "+product.getPrice().toString());
+        tvProductPrice.setText("€ " + product.getPrice().toString());
     }
 
     private void initializeQuantity() {
